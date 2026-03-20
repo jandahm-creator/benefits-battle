@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VB Benefits Battle</title>
+
+<style>
+body{font-family:Arial;margin:0;background:#f4f6f9;text-align:center}
+.header{background:#0051A2;color:white;padding:15px;font-size:20px}
+.card{background:white;margin:10px;padding:10px;border-radius:12px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+.card img{width:100%;border-radius:10px}
+button{padding:12px;margin:6px;border:none;border-radius:10px;background:#F36F21;color:white;font-size:16px}
+.progress{margin:10px;font-weight:bold}
+.fade{animation:fade 0.4s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+
+<body>
+
+<div class="header">VB Benefits Battle</div>
+<div class="progress" id="progress"></div>
+<div id="game"></div>
+
+<script>
+
+// ---------- STATE ----------
+let battleCount = 0;
+let streak = 0;
+
+// ---------- BENEFITS (ECHTE BILDER ERSETZBAR) ----------
+const benefits = [
+  {id:1,title:"Mobiles Arbeiten",img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f"},
+  {id:2,title:"JobRad",img:"https://images.unsplash.com/photo-1508973379184-7517410fb0c1"},
+  {id:3,title:"Weiterbildung",img:"https://images.unsplash.com/photo-1519389950473-47ba0277781c"},
+  {id:4,title:"Gesundheit",img:"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b"},
+  {id:5,title:"Team Events",img:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d"}
+];
+
+// ---------- QUIZ ----------
+const quiz = [
+  {q:"Was ist ein Benefit?",a:["Gehalt","Zusatzleistung","Urlaub"],correct:1},
+  {q:"Was fördert Mitarbeiterbindung?",a:["Benefits","Chaos","Stress"],correct:0},
+  {q:"Was stärkt Employer Branding?",a:["Transparenz","Ignoranz","Stillstand"],correct:0}
+];
+
+// ---------- UI ----------
+const game = document.getElementById("game");
+const progress = document.getElementById("progress");
+
+// ---------- LOGIK ----------
+
+function updateProgress(){
+  progress.innerHTML = `Fortschritt: ${streak}/10 richtige Antworten`;
+}
+
+function randomPair(){
+  let a = benefits[Math.floor(Math.random()*benefits.length)];
+  let b;
+  do{
+    b = benefits[Math.floor(Math.random()*benefits.length)];
+  } while(a.id === b.id);
+  return [a,b];
+}
+
+function renderBattle(){
+  let pair = randomPair();
+
+  game.innerHTML = `
+    <div class="card fade" onclick="vote(${pair[0].id})">
+      <img src="${pair[0].img}">
+      <h3>${pair[0].title}</h3>
+    </div>
+    <div class="card fade" onclick="vote(${pair[1].id})">
+      <img src="${pair[1].img}">
+      <h3>${pair[1].title}</h3>
+    </div>
+  `;
+}
+
+function vote(){
+  battleCount++;
+
+  if(battleCount >= 3){
+    battleCount = 0;
+    renderQuiz();
+  } else {
+    renderBattle();
+  }
+}
+
+function renderQuiz(){
+  let q = quiz[Math.floor(Math.random()*quiz.length)];
+
+  game.innerHTML = `
+    <div class="fade">
+      <h2>${q.q}</h2>
+      ${q.a.map((ans,i)=>`<button onclick="answer(${i},${q.correct})">${ans}</button>`).join("")}
+    </div>
+  `;
+}
+
+function answer(i,correct){
+  if(i === correct){
+    streak++;
+    updateProgress();
+
+    game.innerHTML = `
+      <div class="fade">
+        <h2>Richtig! 🎉</h2>
+        <img src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif" width="150">
+      </div>
+    `;
+
+    if(streak >= 10){
+      win();
+    } else {
+      setTimeout(renderBattle,1200);
+    }
+
+  } else {
+    game.innerHTML = `
+      <div class="fade">
+        <h2>Guter Versuch! 👍</h2>
+        <p>Du hattest ${streak} richtige Antworten.</p>
+      </div>
+    `;
+    streak = 0;
+    setTimeout(renderBattle,2000);
+  }
+}
+
+function win(){
+  let code = "VB-" + Math.floor(1000 + Math.random()*9000);
+
+  game.innerHTML = `
+    <div class="fade">
+      <h1>🏆 Herzlichen Glückwunsch!</h1>
+      <p>Du hast gewonnen!</p>
+      <h2>${code}</h2>
+      <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="200">
+      <h3>Top Benefits (Demo)</h3>
+      <p>1. Mobiles Arbeiten</p>
+      <p>2. Weiterbildung</p>
+      <p>3. Gesundheit</p>
+    </div>
+  `;
+}
+
+// ---------- START ----------
+updateProgress();
+renderBattle();
+
+</script>
+
+</body>
+</html>
