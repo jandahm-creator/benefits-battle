@@ -5,76 +5,148 @@
 <title>VB Benefits Battle</title>
 
 <style>
-body{font-family:Arial;margin:0;background:#f4f6f9;text-align:center;padding-bottom:.header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:linear-gradient(90deg,#0051A2,#003A75);
-  color:white;
-  padding:10px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  box-shadow:0 2px 10px rgba(0,0,0,0.15);
+body{
+  font-family: Arial;
+  margin: 0;
+  background: #f4f6f9;
+  text-align: center;
+  padding-bottom: 0;
+}
+
+.header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg,#0051A2,#003A75);
+  color: white;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
 }
 
 .header-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .header img{
-  height:34px;
+  height: 34px;
 }
 
 .header-title{
-  font-size:16px;
-  font-weight:600;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .header-right{
-  font-size:12px;
-  opacity:0.9;
+  font-size: 12px;
+  opacity: 0.9;
 }
 
-.battle-container{display:grid;grid-template-columns:1fr;gap:16px;padding:15px}
-@media(min-width:700px){.battle-container{grid-template-columns:1fr 80px 1fr}}
-.vs{font-weight:bold;color:#666}
+.battle-container{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 15px;
+}
+@media(min-width:700px){
+  .battle-container{
+    grid-template-columns:1fr 80px 1fr;
+  }
+}
 
-.card{background:white;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.1);overflow:hidden}
-.card img{width:100%;height:220px;object-fit:cover}
-.card h3{color:#0051A2}
+.vs{
+  font-weight: bold;
+  color: #666;
+}
 
-.button{background:#F36F21;color:white;padding:10px;margin:5px;border-radius:10px;cursor:pointer}
+.card{
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+.card img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+.card h3{
+  color: #0051A2;
+}
 
-.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center}
-.overlay-content{background:white;padding:20px;border-radius:12px;max-width:90%}
+.button{
+  background: #F36F21;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
-.progress-container{position:fixed;bottom:0;width:100%;background:white;padding:10px}
-.progress-bar{width:90%;height:10px;background:#ddd;margin:auto}
-.progress-fill{height:100%;background:#0051A2}
-.dot{display:inline-block;width:10px;height:10px;margin:3px;border-radius:50%;background:#ccc}
-.dot.active{background:#F36F21}
-     /* bestehender Code */
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.overlay-content{
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 90%;
+}
 
+.progress-container{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  padding: 10px;
+}
+.progress-bar{
+  width: 90%;
+  height: 10px;
+  background: #ddd;
+  margin: auto;
+}
+.progress-fill{
+  height: 100%;
+  background: #0051A2;
+}
+.dot{
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 3px;
+  border-radius: 50%;
+  background: #ccc;
+}
 .dot.active{
-  background:#F36F21;
+  background: #F36F21;
 }
 
-/* 🔥 HIER EINFÜGEN */
+/* 🔥 Konfetti */
 .confetti{
-  position:fixed;
-  width:8px;
-  height:8px;
-  top:-10px;
-  animation:fall 2s linear forwards;
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  animation: fall 2s linear forwards;
 }
 
 @keyframes fall{
   to{
-    transform:translateY(100vh) rotate(360deg);
-    opacity:0;
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
   }
 }
 </style>
@@ -83,180 +155,172 @@ body{font-family:Arial;margin:0;background:#f4f6f9;text-align:center;padding-bot
 <body>
 
 <div class="header">
-
   <div class="header-left">
     <img src="logo.png">
     <div class="header-title">VB Benefits Battle</div>
   </div>
-
   <div class="header-right">
     Volksbank WML
   </div>
-
 </div>
+
 <div id="game"></div>
 
 <div class="overlay" id="overlay">
-<div class="overlay-content">
-<h2 id="overlayTitle"></h2>
-<p id="overlayText"></p>
-<div class="button" onclick="closeOverlay()">Schließen</div>
-</div>
+  <div class="overlay-content">
+    <h2 id="overlayTitle"></h2>
+    <p id="overlayText"></p>
+    <div class="button" onclick="closeOverlay()">Schließen</div>
+  </div>
 </div>
 
 <div class="progress-container">
-<div id="progressText"></div>
-<div class="progress-bar">
-<div id="progressFill" class="progress-fill"></div>
-</div>
-<div id="dots"></div>
+  <div id="progressText"></div>
+  <div class="progress-bar">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
+  <div id="dots"></div>
 </div>
 
 <script>
-
 let streak=0;
 let battleCount=0;
 
-// ✅ ALLE BENEFITS
 const benefits=[
-{id:1,title:"Mobiles Arbeiten",img:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f",info:"Flexibles Arbeiten von zu Hause, wohnortnah oder unterwegs."},
-{id:2,title:"JobRad",img:"https://images.unsplash.com/photo-1508973379184-7517410fb0c1",info:"Lease bis zu zwei Fahrräder im Gesamtwert von 10.000,00 € per Entgeltumwandlung und spare bares Geld. Die Versicherung Premium geht auf uns!"},
-{id:3,title:"Förderung von Weiterbildungen",img:"https://images.unsplash.com/photo-1519389950473-47ba0277781c",info:"Individuelle Förderung und Weiterbildungen, Schulungen und Studiengängen."},
-{id:4,title:"Betriebliche Gesundheitsangebote",img:"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b",info:"Sport- und Gesundheitsangebote."},
-{id:5,title:"Mitarbeiterkonditionen",img:"https://images.unsplash.com/photo-1563013544-824ae1b704d3",info:"Vergünstigte Konditionen."},
-{id:6,title:"Sonderurlaub zu besonderen Anlässen",img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e",info:"Zusätzliche freie Tage."},
-{id:7,title:"Flexible Arbeitszeitgestaltung",img:"https://images.unsplash.com/photo-1506784983877-45594efa4cbe",info:"Flexible Arbeitszeiten."},
-{id:8,title:"EGYM Wellpass",img:"https://images.unsplash.com/photo-1554284126-aa88f22d8b74",info:"Fitnessangebote nutzen."},
-{id:9,title:"Deutschlandticket",img:"https://images.unsplash.com/photo-1504215680853-026ed2a45def",info:"ÖPNV-Zuschuss."},
-{id:10,title:"Facharztvermittlung",img:"https://images.unsplash.com/photo-1580281657527-47f249e8f5c4",info:"Schneller zum Facharzt."},
-{id:11,title:"Gruppenunfallversicherung",img:"https://images.unsplash.com/photo-1450101499163-c8848c66ca85",info:"Absicherung privat & beruflich."},
-{id:12,title:"Betriebliche Altersversorgung",img:"https://images.unsplash.com/photo-1565372911438-acc31d93e9f6",info:"Vorsorge fürs Alter."},
-{id:13,title:"Kostenloses Wasser",img:"https://images.unsplash.com/photo-1502741338009-cac2772e18bc",info:"Getränke am Arbeitsplatz."},
-{id:14,title:"Hinterbliebenenversorgung",img:"https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d",info:"Absicherung für Angehörige."},
-{id:15,title:"Beihilfen zu besonderen Anlässen",img:"https://images.unsplash.com/photo-1521791136064-7986c2920216",info:"Finanzielle Unterstützung."},
-{id:16,title:"Betriebsfest",img:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d",info:"Gemeinsame Events."}
+  {id:1,title:"Mobiles Arbeiten",img:"https://cdn.pixabay.com/photo/3184395/pexels-photo-3184395.jpeg",info:"Flexibles Arbeiten von zu Hause, wohnortnah oder unterwegs."},
+  {id:2,title:"JobRad",img:"https://cdn.pixabay.com/photo/3624710/pexels-photo-3624710.jpeg",info:"Lease bis zu zwei Fahrräder im Gesamtwert von 10.000,00 € per Entgeltumwandlung und spare bares Geld. Die Versicherung Premium geht auf uns!"},
+  {id:3,title:"Förderung von Weiterbildungen",img:"https://cdn.pixabay.com/photo/3183150/pexels-photo-3183150.jpeg",info:"Individuelle Förderung und Weiterbildungen, Schulungen und Studiengängen."},
+  {id:4,title:"Betriebliche Gesundheitsangebote",img:"https://cdn.pixabay.com/photo/3756673/pexels-photo-3756673.jpeg",info:"Sport- und Gesundheitsangebote."},
+  {id:5,title:"Mitarbeiterkonditionen",img:"https://cdn.pixabay.com/photo/3810790/pexels-photo-3810790.jpeg",info:"Vergünstigte Konditionen."},
+  {id:6,title:"Sonderurlaub",img:"https://cdn.pixabay.com/photo/2662116/pexels-photo-2662116.jpeg",info:"Zusätzliche freie Tage."},
+  {id:7,title:"Flexible Arbeitszeiten",img:"https://cdn.pixabay.com/photo/3183207/pexels-photo-3183207.jpeg",info:"Flexible Arbeitszeiten."},
+  {id:8,title:"Fitness & Wellpass",img:"https://cdn.pixabay.com/photo/4056531/pexels-photo-4056531.jpeg",info:"Fitnessangebote nutzen."},
+  {id:9,title:"Deutschlandticket",img:"https://cdn.pixabay.com/photo/4334811/pexels-photo-4334811.jpeg",info:"ÖPNV-Zuschuss."},
+  {id:10,title:"Facharztvermittlung",img:"https://cdn.pixabay.com/photo/6186407/pexels-photo-6186407.jpeg",info:"Schneller zum Facharzt."},
+  {id:11,title:"Gruppenunfallversicherung",img:"https://cdn.pixabay.com/photo/40567/pexels-photo-40567.jpeg",info:"Absicherung privat & beruflich."},
+  {id:12,title:"Betriebliche Altersversorgung",img:"https://cdn.pixabay.com/photo/450301/pexels-photo-450301.jpeg",info:"Vorsorge fürs Alter."},
+  {id:13,title:"Kostenloses Wasser",img:"https://cdn.pixabay.com/photo/4943715/pexels-photo-4943715.jpeg",info:"Getränke am Arbeitsplatz."},
+  {id:14,title:"Hinterbliebenenversorgung",img:"https://cdn.pixabay.com/photo/4327220/pexels-photo-4327220.jpeg",info:"Absicherung für Angehörige."},
+  {id:15,title:"Beihilfen",img:"https://cdn.pixabay.com/photo/533947/pexels-photo-533947.jpeg",info:"Finanzielle Unterstützung."},
+  {id:16,title:"Betriebsfest",img:"https://cdn.pixabay.com/photo/1531056/pexels-photo-1531056.jpeg",info:"Gemeinsame Events."}
 ];
 
-// ✅ ALLE FRAGEN (KORREKT)
 const quiz=[
-{q:"Wie viele aktive Mitarbeitende (inkl. Auszubildender) hatte die Volksbank Westmünsterland eG zum 31.12.2025?",a:["512","646","702"],correct:1},
-{q:"Wie hoch ist die Teilzeitquote zum 31.12.2025?",a:["37,8 %","32,3 %","25,9 %"],correct:0},
-{q:"Wie hoch liegt die Ausbildungsquote zum 31.12.2025?",a:["11,38 %","10,00 %","12,50 %"],correct:0},
-{q:"Wie oft in Folge wurde die Volksbank Westmünsterland als TOP Employer ausgezeichnet?",a:["7 mal","16 mal","19 mal"],correct:2},
-{q:"Wie hoch ist der Anteil weiblicher Führungskräfte?",a:["25,5 %","31,0 %","35,0 %"],correct:1},
-{q:"Wie oft nutzen Mitarbeitende den EGYM Wellpass monatlich (Check-Ins)?",a:["466","320","598"],correct:0},
-{q:"Wie viele Mitarbeitende nutzen den EGYM Wellpass?",a:["98","124","56"],correct:1},
-{q:"Wie hoch war die Gesundheitsquote 2025?",a:["94,8 %","95,3 %","95,6 %"],correct:2},
-{q:"Wie viele Räder sind aktuell im Bikeleasing?",a:["80","120","160"],correct:1},
-{q:"Wie viele Stellenbesetzungen gab es 2025 (intern und extern)?",a:["95","78","113"],correct:0},
-{q:"Wie viele elektronische Verträge 2025 wurden 2025 qualifiziert elektronisch signiert?",a:["8","60","38"],correct:1},
-{q:"Die Volksbank gehört zu…",a:["Privatbanken","genossenschaftlichen Banken","Landesbanken"],correct:1},
-{q:"Wer ist Eigentümer der Volksbank Westmünsterland eG und kann mitbestimmen?",a:["Investoren","Sparkassenverband","Mitglieder"],correct:2},
-{q:"In welcher Region ist die Bank tätig?",a:["Ruhrgebiet","Westmünsterland","Ostwestfalen"],correct:1},
-{q:"Was wird im Rahmen des betrieblichen Gesundheitsmanagement aktuell NICHT angeboten?",a:["Bioimpendanzanalyse","Grippeschutzimpfung","Nichtraucherkurse"],correct:2},
-{q:"Welches Unternehmen gehört nicht zur genossenschaftlichen FinanzGruppe?",a:["Ergo","R+V Versicherung","Union Investment"],correct:0},
-{q:"Warum bilden wir viele Azubis aus?",a:["aus Langeweile","Nachhaltig den eigenen Bedarf sichern","Image"],correct:1},
-{q:"Unterschied Banken?",a:["Keine Kunden","regional & Mitglieder","Börse"],correct:1},
-{q:"Wie viele Stellen haben wir 2025 ausgeschrieben?",a:["75","50","25"],correct:0},
-{q:"Wie viele Bewerbungen sind 2025 bei der Volksbank Westmünsterland eingegangen?",a:["1387","721","1093"],correct:2},
-{q:"Wie viele Azubi Bewerbungen gab es im Jahr 2025?",a:["122","87","61"],correct:0},
-{q:"Wie viele Azubis sind im August 2025 bei unsgestartet? Start?",a:["35","28","14"],correct:1},
-{q:"Wie vielen Azubis haben wir eine Übernahme angeboten?",a:["100 %","90 %","80 %"],correct:0},
-{q:"Wie hoch ist die Ø Betriebszugehörigkeit der Belegschaft?",a:["17,8 Jahre","15,6 Jahre","13,3 Jahre"],correct:0},
-{q:"Wie viele Mitarbeitenden arbeiten bereits ihr halbes Leben im Unternehmen?",a:["290","187","221"],correct:2},
-{q:"Wie viele Weiterbildungstage gab es 2025in der Bank?",a:["2755","3123","2489"],correct:1}
+  {q:"Wie viele aktive Mitarbeitende (inkl. Auszubildender) hatte die Volksbank Westmünsterland eG zum 31.12.2025?",a:["512","646","702"],correct:1},
+  {q:"Wie hoch ist die Teilzeitquote zum 31.12.2025?",a:["37,8 %","32,3 %","25,9 %"],correct:0},
+  {q:"Wie hoch liegt die Ausbildungsquote zum 31.12.2025?",a:["11,38 %","10,00 %","12,50 %"],correct:0},
+  {q:"Wie oft in Folge wurde die Volksbank Westmünsterland als TOP Employer ausgezeichnet?",a:["7 mal","16 mal","19 mal"],correct:2},
+  {q:"Wie hoch ist der Anteil weiblicher Führungskräfte?",a:["25,5 %","31,0 %","35,0 %"],correct:1},
+  {q:"Wie oft nutzen Mitarbeitende den EGYM Wellpass monatlich (Check-Ins)?",a:["466","320","598"],correct:0},
+  {q:"Wie viele Mitarbeitende nutzen den EGYM Wellpass?",a:["98","124","56"],correct:1},
+  {q:"Wie hoch war die Gesundheitsquote 2025?",a:["94,8 %","95,3 %","95,6 %"],correct:2},
+  {q:"Wie viele Räder sind aktuell im Bikeleasing?",a:["80","120","160"],correct:1},
+  {q:"Wie viele Stellenbesetzungen gab es 2025 (intern und extern)?",a:["95","78","113"],correct:0},
+  {q:"Wie viele elektronische Verträge 2025 wurden 2025 qualifiziert elektronisch signiert?",a:["8","60","38"],correct:1},
+  {q:"Die Volksbank gehört zu…",a:["Privatbanken","genossenschaftlichen Banken","Landesbanken"],correct:1},
+  {q:"Wer ist Eigentümer der Volksbank Westmünsterland eG und kann mitbestimmen?",a:["Investoren","Sparkassenverband","Mitglieder"],correct:2},
+  {q:"In welcher Region ist die Bank tätig?",a:["Ruhrgebiet","Westmünsterland","Ostwestfalen"],correct:1},
+  {q:"Was wird im Rahmen des betrieblichen Gesundheitsmanagement aktuell NICHT angeboten?",a:["Bioimpendanzanalyse","Grippeschutzimpfung","Nichtraucherkurse"],correct:2},
+  {q:"Welches Unternehmen gehört nicht zur genossenschaftlichen FinanzGruppe?",a:["Ergo","R+V Versicherung","Union Investment"],correct:0},
+  {q:"Warum bilden wir viele Azubis aus?",a:["aus Langeweile","Nachhaltig den eigenen Bedarf sichern","Image"],correct:1},
+  {q:"Unterschied Banken?",a:["Keine Kunden","regional & Mitglieder","Börse"],correct:1},
+  {q:"Wie viele Stellen haben wir 2025 ausgeschrieben?",a:["75","50","25"],correct:0},
+  {q:"Wie viele Bewerbungen sind 2025 bei der Volksbank Westmünsterland eingegangen?",a:["1387","721","1093"],correct:2},
+  {q:"Wie viele Azubi Bewerbungen gab es im Jahr 2025?",a:["122","87","61"],correct:0},
+  {q:"Wie viele Azubis sind im August 2025 bei unsgestartet? Start?",a:["35","28","14"],correct:1},
+  {q:"Wie vielen Azubis haben wir eine Übernahme angeboten?",a:["100 %","90 %","80 %"],correct:0},
+  {q:"Wie hoch ist die Ø Betriebszugehörigkeit der Belegschaft?",a:["17,8 Jahre","15,6 Jahre","13,3 Jahre"],correct:0},
+  {q:"Wie viele Mitarbeitenden arbeiten bereits ihr halbes Leben im Unternehmen?",a:["290","187","221"],correct:2},
+  {q:"Wie viele Weiterbildungstage gab es 2025in der Bank?",a:["2755","3123","2489"],correct:1}
 ];
 
-// UI / LOGIK (gleich wie vorher)
 const game=document.getElementById("game");
 
 function updateProgress(){
-document.getElementById("progressText").innerHTML="Fortschritt "+streak+"/10";
-document.getElementById("progressFill").style.width=(streak*10)+"%";
-let dots="";
-for(let i=0;i<10;i++){dots+=`<span class="dot ${i<streak?"active":""}"></span>`;}
-document.getElementById("dots").innerHTML=dots;
+  document.getElementById("progressText").innerHTML="Fortschritt "+streak+"/10";
+  document.getElementById("progressFill").style.width=(streak*10)+"%";
+  let dots="";
+  for(let i=0;i<10;i++){dots+=`<span class="dot ${i<streak?"active":""}"></span>`;}
+  document.getElementById("dots").innerHTML=dots;
 }
 
 function renderBattle(){
-let a=benefits[Math.floor(Math.random()*benefits.length)];
-let b; do{b=benefits[Math.floor(Math.random()*benefits.length)]}while(a.id===b.id);
+  let a=benefits[Math.floor(Math.random()*benefits.length)];
+  let b; do{b=benefits[Math.floor(Math.random()*benefits.length)]}while(a.id===b.id);
 
-game.innerHTML=`<div class="battle-container">
-<div class="card" onclick="vote()">
-<img src="${a.img}">
-<h3>${a.title}</h3>
-<div class="button" onclick='openOverlay(${JSON.stringify(a)})'>Mehr erfahren</div>
-<div class="button" onclick="vote()">Auswählen</div>
-</div>
-<div class="vs">VS</div>
-<div class="card">
-<img src="${b.img}">
-<h3>${b.title}</h3>
-<div class="button" onclick='event.stopPropagation(); openOverlay(...)'>
-</div>
-</div>`;
+  game.innerHTML=`<div class="battle-container">
+    <div class="card" onclick="vote()">
+      <img src="${a.img}">
+      <h3>${a.title}</h3>
+      <div class="button" onclick='event.stopPropagation(); openOverlay(${JSON.stringify(a)})'>Mehr erfahren</div>
+    </div>
+    <div class="vs">VS</div>
+    <div class="card" onclick="vote()">
+      <img src="${b.img}">
+      <h3>${b.title}</h3>
+      <div class="button" onclick='event.stopPropagation(); openOverlay(${JSON.stringify(b)})'>Mehr erfahren</div>
+    </div>
+  </div>`;
 }
 
 function openOverlay(b){
-document.getElementById("overlay").style.display="flex";
-document.getElementById("overlayTitle").innerText=b.title;
-document.getElementById("overlayText").innerText=b.info;
+  document.getElementById("overlay").style.display="flex";
+  document.getElementById("overlayTitle").innerText=b.title;
+  document.getElementById("overlayText").innerText=b.info;
 }
-function closeOverlay(){document.getElementById("overlay").style.display="none";}
+
+function closeOverlay(){
+  document.getElementById("overlay").style.display="none";
+}
 
 function vote(){
-battleCount++;
-if(battleCount>=3){battleCount=0;renderQuiz()}else{renderBattle()}
+  battleCount++;
+  if(battleCount>=3){
+    battleCount=0;
+    renderQuiz();
+  } else {
+    renderBattle();
+  }
 }
 
 function renderQuiz(){
-let q=quiz[Math.floor(Math.random()*quiz.length)];
-game.innerHTML=`<h2>${q.q}</h2>
-${q.a.map((a,i)=>`<div class="button" onclick="answer(${i},${q.correct})">${a}</div>`).join("")}`;
+  let q=quiz[Math.floor(Math.random()*quiz.length)];
+  game.innerHTML=`<h2>${q.q}</h2>
+  ${q.a.map((a,i)=>`<div class="button" onclick="answer(${i},${q.correct},'${q.a[q.correct]}')">${a}</div>`).join("")}`;
 }
 
-function answer(i,c){
 function answer(i,c,correctText){
-
-if(i===c){
-
-  confetti(); // 🎉 Konfetti
-  streak++;
-  updateProgress();
-
-  if(streak>=10){
-    win();
-    return;
+  if(i===c){
+    confetti();
+    streak++;
+    updateProgress();
+    if(streak>=10){
+      alert("Herzlichen Glückwunsch! Du hast 10 richtige Antworten in Folge.");
+      streak=0; 
+      updateProgress();
+      renderBattle();
+      return;
+    }
+    game.innerHTML=`
+      <h2>Richtig! 🎉</h2>
+      <p>Weiter so!</p>
+    `;
+    setTimeout(renderBattle,1200);
+  } else {
+    streak=0;
+    updateProgress();
+    game.innerHTML=`
+      <h2>Leider nicht richtig ❌</h2>
+      <p><strong>Richtige Antwort:</strong> ${correctText}</p>
+      <p>Leider nicht richtig, aber bleib dran und sammle zehn richtige Antworten in Folge und hol dir deinen Gewinncode ab.</p>
+    `;
+    setTimeout(renderBattle,2500);
   }
-
-  game.innerHTML=`
-  <h2>Richtig! 🎉</h2>
-  <p>Weiter so!</p>
-  `;
-
-  setTimeout(renderBattle,1200);
-
-}else{
-
-  streak=0;
-  updateProgress();
-
-  game.innerHTML=`
-  <h2>Leider nicht richtig ❌</h2>
-  <p><strong>Richtige Antwort:</strong> ${correctText}</p>
-  <p>Leider nicht richtig, aber bleib dran und sammle zehn richtige Antworten in Folge und hol dir deinen Gewinncode ab.</p>
-  `;
-
-  setTimeout(renderBattle,2500);
-}
-}
-updateProgress();
-renderBattle();
 }
 
 updateProgress();
 renderBattle();
+
 function confetti(){
   for(let i=0;i<30;i++){
     let el=document.createElement("div");
