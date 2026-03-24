@@ -162,7 +162,7 @@ let a=benefits[Math.floor(Math.random()*benefits.length)];
 let b; do{b=benefits[Math.floor(Math.random()*benefits.length)]}while(a.id===b.id);
 
 game.innerHTML=`<div class="battle-container">
-<div class="card">
+<div class="card" onclick="vote()">
 <img src="${a.img}">
 <h3>${a.title}</h3>
 <div class="button" onclick='openOverlay(${JSON.stringify(a)})'>Mehr erfahren</div>
@@ -172,8 +172,7 @@ game.innerHTML=`<div class="battle-container">
 <div class="card">
 <img src="${b.img}">
 <h3>${b.title}</h3>
-<div class="button" onclick='openOverlay(${JSON.stringify(b)})'>Mehr erfahren</div>
-<div class="button" onclick="vote()">Auswählen</div>
+<div class="button" onclick='event.stopPropagation(); openOverlay(...)'>
 </div>
 </div>`;
 }
