@@ -56,6 +56,27 @@ body{font-family:Arial;margin:0;background:#f4f6f9;text-align:center;padding-bot
 .progress-fill{height:100%;background:#0051A2}
 .dot{display:inline-block;width:10px;height:10px;margin:3px;border-radius:50%;background:#ccc}
 .dot.active{background:#F36F21}
+     /* bestehender Code */
+
+.dot.active{
+  background:#F36F21;
+}
+
+/* 🔥 HIER EINFÜGEN */
+.confetti{
+  position:fixed;
+  width:8px;
+  height:8px;
+  top:-10px;
+  animation:fall 2s linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(100vh) rotate(360deg);
+    opacity:0;
+  }
+}
 </style>
 </head>
 
@@ -196,14 +217,56 @@ ${q.a.map((a,i)=>`<div class="button" onclick="answer(${i},${q.correct})">${a}</
 }
 
 function answer(i,c){
-if(i===c){streak++}else{streak=0}
+function answer(i,c,correctText){
+
+if(i===c){
+
+  confetti(); // 🎉 Konfetti
+  streak++;
+  updateProgress();
+
+  if(streak>=10){
+    win();
+    return;
+  }
+
+  game.innerHTML=`
+  <h2>Richtig! 🎉</h2>
+  <p>Weiter so!</p>
+  `;
+
+  setTimeout(renderBattle,1200);
+
+}else{
+
+  streak=0;
+  updateProgress();
+
+  game.innerHTML=`
+  <h2>Leider nicht richtig ❌</h2>
+  <p><strong>Richtige Antwort:</strong> ${correctText}</p>
+  <p>Leider nicht richtig, aber bleib dran und sammle zehn richtige Antworten in Folge und hol dir deinen Gewinncode ab.</p>
+  `;
+
+  setTimeout(renderBattle,2500);
+}
+}
 updateProgress();
 renderBattle();
 }
 
 updateProgress();
 renderBattle();
-
+function confetti(){
+  for(let i=0;i<30;i++){
+    let el=document.createElement("div");
+    el.className="confetti";
+    el.style.left=Math.random()*100+"vw";
+    el.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),2000);
+  }
+}
 </script>
 
 </body>
